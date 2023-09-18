@@ -2,7 +2,7 @@
 
 ## Week 0 (Project Prep)
 
-### Branching Tagging PR :mage:
+### Branching Tagging PR (:mage:)
 
 > Repository name: [terraform-beginner-bootcamp-2023](https://github.com/feleck/terraform-beginner-bootcamp-2023)
 
@@ -43,8 +43,13 @@ git tag 0.1.0
 git push --tags
 ```
 
-> oh my bash
+| [oh my bash](https://github.com/ohmybash/oh-my-bash) - consider checking out
 
-When branch is pushed and tagged - go to *Pull requests* on github and create *New pull request*
+When branch is pushed and tagged - go to *Pull requests* on github and create *New pull request*. Feature branch to the main - that's the direction. Add description. When `squash and merge` - all commits are squashed in PR.
 
 If branch was named like issue (1-semantic-versioning) it should connect PR with the issue.
+
+> ***Stop Gitpod Workspace!*** to spare some time  
+> Tag **after** merging the Pull Request  
+> Do not delete branches (for inspection)
+
