@@ -52,3 +52,4 @@ If branch was named like issue (1-semantic-versioning) it should connect PR with
 > ***Stop Gitpod Workspace!*** to spare some time  
 > Tag **after** merging the Pull Request  
 > Do not delete branches (for inspection)
+
