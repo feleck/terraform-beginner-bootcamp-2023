@@ -1,6 +1,6 @@
 # Terraform Beginner Bootcamp 2023
 
-## Pre-week
+## Week 0 (Prep)
 
 ### Create repo from repository
 
@@ -64,4 +64,7 @@ Workflow:
 * commit changes to github (with a message)
 * sync our changes (push)
 
+### Basic writing and formatting syntax
+
+[Basic writing and formatting syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
 
