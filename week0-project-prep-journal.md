@@ -26,14 +26,14 @@ The general format:
 - **MINOR** version when you add functionality in a backward compatible manner
 - **PATCH** version when you make backward compatible bug fixes
 
-----
+---
 > [**Commit Message Guidelines**](https://gist.github.com/robertpainsi/b632364184e70900af4ab688decf6f53)
 >
 > - Do not end the subject line with a period
 > - Capitalize the subject line and each paragraph
 > - Use the imperative mood in the subject line
-
-----
+>
+>---
 
 ```bash
 git add .
@@ -131,7 +131,7 @@ Create script from Terraform instructions, add permissions to run (`chmod u+x` o
 - init (only for new workspace - not for existing one (on restart))
 - command
 
-----
+---
 
 Commit changes, create PR and marge it, fetch, checkout main, pull, and add tag: 0.2.0  
 Stop Workspace.
@@ -142,20 +142,24 @@ Stop Workspace.
 
 - List all variables using `env` command. Filter specific env vars using grep: `env | grep ROOT`.
 - In the terminal, set using var name, equal sign and value in single quotes: `VARIABLE='some value'` - this is a **shell variable**.
-- Can be used temporarily running command: 
+- Can be used temporarily running command:
+
   ```sh
     HELLO='world' ./bin/print_message`
   ```
+
 - Export usage: `export VARIABLE='some value'` - this is an **env varable**
 - Unsetting: `unset VARIABLE`
 - Using (in a script): with `$` sign at the beginning: `$VARIABLE`
 - Within a bash script `export` can be ommited: 
+
   ```sh
     #!/bin/env bash
     HELLO='world'
 
     echo $HELLO
   ```
+
 - Printing: using echo `echo $HELLO`
 - Scoping - new bash terminal in VSCode it won't be aware of other terminal env vars. If you want Env Vars to persist acress all future bash terminals you need to set env vars in your bash profile `~/.bash_profile` file.
 
@@ -166,6 +170,7 @@ Store Env Variables in Gitpod User Variables [https://gitpod.io/user/variables](
 ```sh
 gp env HELLO='world'
 ```
+
 All future workspaces will set the env vars (according to set scope).
 Env vars can be stored in `.gitpod.yml` but **DO NOT** store there ANY sensitive data (keys, passwords etc.)
 
@@ -175,6 +180,7 @@ AWS CLI is installed for this project via the bash script [`./bin/install_aws_cl
 [Getting Started Install (AWS CLI)](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)  
 
 To check if AWS credentials are configured correctly use:
+
 ```sh
 aws sts get-caller-identity
 ```
@@ -182,6 +188,7 @@ aws sts get-caller-identity
 [Environment variables to configure the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html)
 
 When succesful response should look like this:
+
 ```json
 {
     "UserId": "AKIAIOSFODNN7EXAMPLE",
@@ -189,4 +196,70 @@ When succesful response should look like this:
     "Arn": "arn:aws:iam::123456789012:user/terraform_bootcamp_username"
 }
 ```
+
 Need to generate AWS CLI credentials from AWS IAM User in order to the user AWS CLI.
+
+### [Terraform providers](https://registry.terraform.io/browse/providers)
+
+Terraform sources their providers and modules from the Terraform registry which is located at **[registry.terraform.io](https://registry.terraform.io)**
+
+---
+> **Provider** is a **mapping (interface) API to resources**, allows to create resources in code. Use the Amazon Web Services (AWS) provider to interact with the many resources supported by AWS.  
+> You must configure the provider with the proper credentials before you can use it.
+> 
+> **Modules** are self-contained packages of Terraform configurations (templates) that are managed as a group. This is a way to make a large amount of tf code portable, modular and shareable.
+>
+> ---
+
+#### AWS Provider documentation: [https://registry.terraform.io/providers/hashicorp/aws/latest/docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
+
+#### Random provider [https://registry.terraform.io/providers/hashicorp/random/latest](https://registry.terraform.io/providers/hashicorp/random/latest)
+
+Root (top) level module is in [main.tf](./main.tf) - we are making a module.
+
+First we have provider, then we have to provide resource.
+
+random_string resource [https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string)
+
+> #### Terraform Main Commands:
+> command: `terraform`
+>- init - Prepare your working directory for other commands
+>- validate - Check whether the configuration is valid
+>- plan - Show changes required by the current configuration
+>- apply - Create or update infrastructure
+>- destroy - Destroy previously-created infrastructure
+
+In every TF project at the very beginning:
+
+```sh
+terraform init
+```
+
+Creates lock file (locked versioning for providers and modules) [.terraform.lock.hcl](./.terraform.lock.hcl). It **shoud be commmited to repository**(VCS).
+
+> VCS - Version Control System
+
+It also creates `.terraform` folder, which contains binary for provider (written in go and distributed as binary).  It **shoud *not* be commmited to repository** (VCS).
+Make sure `.terraform` folder is ignored in [.gitignore](./.gitignore) file - not commited to repository (and ignored many more files).  
+
+We can make a ***plan***.  
+
+```sh
+terraform plan
+```
+
+It is creating a chageset - this is what is planned to change.
+If run with `-out` you can save it to a file for later execution (often can be ommited).
+
+```sh
+terraform apply #--auto-approve
+```
+
+Runs the plan and executes it. Always asks if you are sure you want to deploy, can be auto approved with a flag: `--auto-approve`.
+
+After a change in main.tf - `terraform plan` again, verify what is going to be changed.
+Output can be checked wit `terraform output` or if wanted exact output(only value): `terraform output random_bucket_name`.
+
+`terraform apply` creates a [terraform.tfstate](./terraform.tfstate) file which contains information about a current state of infrastructure - no case to edit this file - and [terraform.tfstate.backup](./terraform.tfstate.backup) - backup file. `"serial": 2,` indicates the version. Can contain sensitive data! Lo  
+It **shoud *not* be commmited to repository** (VCS).
+
