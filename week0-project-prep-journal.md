@@ -148,10 +148,10 @@ Stop Workspace.
     HELLO='world' ./bin/print_message`
   ```
 
-- Export usage: `export VARIABLE='some value'` - this is an **env varable**
+- Export usage: `export VARIABLE='some value'` - this is an **env variable**
 - Unsetting: `unset VARIABLE`
 - Using (in a script): with `$` sign at the beginning: `$VARIABLE`
-- Within a bash script `export` can be ommited: 
+- Within a bash script `export` can be ommited:
 
   ```sh
     #!/bin/env bash
@@ -206,7 +206,7 @@ Terraform sources their providers and modules from the Terraform registry which 
 ---
 > **Provider** is a **mapping (interface) API to resources**, allows to create resources in code. Use the Amazon Web Services (AWS) provider to interact with the many resources supported by AWS.  
 > You must configure the provider with the proper credentials before you can use it.
-> 
+>
 > **Modules** are self-contained packages of Terraform configurations (templates) that are managed as a group. This is a way to make a large amount of tf code portable, modular and shareable.
 >
 > ---
@@ -235,11 +235,11 @@ In every TF project at the very beginning:
 terraform init
 ```
 
-Creates lock file (locked versioning for providers and modules) [.terraform.lock.hcl](./.terraform.lock.hcl). It **shoud be commmited to repository**(VCS).
+Creates lock file (locked versioning for providers and modules) [.terraform.lock.hcl](./.terraform.lock.hcl). It **should be commmited to repository**(VCS).
 
 > VCS - Version Control System
 
-It also creates `.terraform` folder, which contains binary for provider (written in go and distributed as binary).  It **shoud *not* be commmited to repository** (VCS).
+It also creates `.terraform` folder, which contains binary for provider (written in go and distributed as binary).  It **should *not* be commmited to repository** (VCS).
 Make sure `.terraform` folder is ignored in [.gitignore](./.gitignore) file - not commited to repository (and ignored many more files).  
 
 We can make a ***plan***.  
@@ -248,8 +248,8 @@ We can make a ***plan***.
 terraform plan
 ```
 
-It is creating a chageset - this is what is planned to change.
-If run with `-out` you can save it to a file for later execution (often can be ommited).
+It is creating a changeset - this is what is planned to change.
+If run with `-out` you can save it to a file for later execution (often can be omitted).
 
 ```sh
 terraform apply #--auto-approve
@@ -261,5 +261,21 @@ After a change in main.tf - `terraform plan` again, verify what is going to be c
 Output can be checked wit `terraform output` or if wanted exact output(only value): `terraform output random_bucket_name`.
 
 `terraform apply` creates a [terraform.tfstate](./terraform.tfstate) file which contains information about a current state of infrastructure - no case to edit this file - and [terraform.tfstate.backup](./terraform.tfstate.backup) - backup file. `"serial": 2,` indicates the version. Can contain sensitive data! Lo  
-It **shoud *not* be commmited to repository** (VCS).
+It **sholud *not* be commmited to repository** (VCS).
 
+To destroy resources use:
+
+```sh
+terraform destroy
+```
+(with flag `--auto-approve` if you don't want to approve by hand)
+
+### S3 Bucket
+
+First need to add AWS provider (blocks terraform and required_providers can be used only once in a file).
+Then - resource: aws_s3_bucket.
+
+#### AWS Provider Authentication and Configuration.
+
+- Not recomended: directly inside a block. (would be comitted to VCS)
+- Using env variables
