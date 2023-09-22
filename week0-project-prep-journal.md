@@ -149,9 +149,9 @@ Stop Workspace.
   ```
 
 - Export usage: `export VARIABLE='some value'` - this is an **env variable**
-- Unsetting: `unset VARIABLE`
+- Un-setting: `unset VARIABLE`
 - Using (in a script): with `$` sign at the beginning: `$VARIABLE`
-- Within a bash script `export` can be ommited:
+- Within a bash script `export` can be omitted:
 
   ```sh
     #!/bin/env bash
@@ -161,7 +161,7 @@ Stop Workspace.
   ```
 
 - Printing: using echo `echo $HELLO`
-- Scoping - new bash terminal in VSCode it won't be aware of other terminal env vars. If you want Env Vars to persist acress all future bash terminals you need to set env vars in your bash profile `~/.bash_profile` file.
+- Scoping - new bash terminal in VSCode it won't be aware of other terminal env vars. If you want Env Vars to persist access all future bash terminals you need to set env vars in your bash profile `~/.bash_profile` file.
 
 #### Env Vars in Gitpod
 
@@ -187,7 +187,7 @@ aws sts get-caller-identity
 
 [Environment variables to configure the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html)
 
-When succesful response should look like this:
+When successful response should look like this:
 
 ```json
 {
@@ -221,8 +221,10 @@ First we have provider, then we have to provide resource.
 
 random_string resource [https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string)
 
-> #### Terraform Main Commands:
+> #### Terraform Main Commands
+>
 > command: `terraform`
+>
 >- init - Prepare your working directory for other commands
 >- validate - Check whether the configuration is valid
 >- plan - Show changes required by the current configuration
@@ -235,11 +237,11 @@ In every TF project at the very beginning:
 terraform init
 ```
 
-Creates lock file (locked versioning for providers and modules) [.terraform.lock.hcl](./.terraform.lock.hcl). It **should be commmited to repository**(VCS).
+Creates lock file (locked versioning for providers and modules) [.terraform.lock.hcl](./.terraform.lock.hcl). It **should be commited to repository**(VCS).
 
 > VCS - Version Control System
 
-It also creates `.terraform` folder, which contains binary for provider (written in go and distributed as binary).  It **should *not* be commmited to repository** (VCS).
+It also creates `.terraform` folder, which contains binary for provider (written in go and distributed as binary).  It **should *not* be commited to repository** (VCS).
 Make sure `.terraform` folder is ignored in [.gitignore](./.gitignore) file - not commited to repository (and ignored many more files).  
 
 We can make a ***plan***.  
@@ -261,13 +263,14 @@ After a change in main.tf - `terraform plan` again, verify what is going to be c
 Output can be checked wit `terraform output` or if wanted exact output(only value): `terraform output random_bucket_name`.
 
 `terraform apply` creates a [terraform.tfstate](./terraform.tfstate) file which contains information about a current state of infrastructure - no case to edit this file - and [terraform.tfstate.backup](./terraform.tfstate.backup) - backup file. `"serial": 2,` indicates the version. Can contain sensitive data! Lo  
-It **sholud *not* be commmited to repository** (VCS).
+It **should *not* be commited to repository** (VCS).
 
 To destroy resources use:
 
 ```sh
 terraform destroy
 ```
+
 (with flag `--auto-approve` if you don't want to approve by hand)
 
 ### S3 Bucket
@@ -275,14 +278,14 @@ terraform destroy
 First need to add AWS provider (blocks terraform and required_providers can be used only once in a file).
 Then - resource: aws_s3_bucket.
 
-#### AWS Provider Authentication and Configuration.
+#### AWS Provider Authentication and Configuration
 
-- Not recomended: directly inside a block. (would be comitted to VCS)
+- Not recommended: directly inside a block. (would be comitted to VCS)
 - Using env variables
 
 ### Issues with Terraform Cloud and Gitpod Workspace
 
-When attempting to `terraform login` it will launch bash a wiswig view to generate a token. However it doesn't work as expected in Gitpod Workspace terminal. After `Shift+Q` - quiting wiswig browser it showed URL to CTRL-CLICK to follow, that allowed to generate token, which later could be copied and (Ctrl+Shift+V) pasted into terminal and saved in `/home/gitpod/.terraform.d/credentials.tfrc.json` json file which is formated like this:
+When attempting to `terraform login` it will launch bash a wiswig view to generate a token. However it doesn't work as expected in Gitpod Workspace terminal. After `Shift+Q` - quitting wiswig browser it showed URL to CTRL-CLICK to follow, that allowed to generate token, which later could be copied and (Ctrl+Shift+V) pasted into terminal and saved in `/home/gitpod/.terraform.d/credentials.tfrc.json` json file which is formatted like this:
 
 ```json
 {
