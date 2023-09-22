@@ -279,3 +279,20 @@ Then - resource: aws_s3_bucket.
 
 - Not recomended: directly inside a block. (would be comitted to VCS)
 - Using env variables
+
+### Issues with Terraform Cloud and Gitpod Workspace
+
+When attempting to `terraform login` it will launch bash a wiswig view to generate a token. However it doesn't work as expected in Gitpod Workspace terminal. After `Shift+Q` - quiting wiswig browser it showed URL to CTRL-CLICK to follow, that allowed to generate token, which later could be copied and (Ctrl+Shift+V) pasted into terminal and saved in `/home/gitpod/.terraform.d/credentials.tfrc.json` json file which is formated like this:
+
+```json
+{
+  "credentials": {
+    "app.terraform.io": {
+      "token": "thisIsaFakeToken"
+    }
+  }
+}
+```
+
+Token is generated on [https://app.terraform.io/app/settings/tokens?source=terraform-login](https://app.terraform.io/app/settings/tokens?source=terraform-login) and can be generated manually and pasted to the file above.
+
