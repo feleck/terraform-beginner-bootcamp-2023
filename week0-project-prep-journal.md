@@ -296,3 +296,5 @@ When attempting to `terraform login` it will launch bash a wiswig view to genera
 
 Token is generated on [https://app.terraform.io/app/settings/tokens?source=terraform-login](https://app.terraform.io/app/settings/tokens?source=terraform-login) and can be generated manually and pasted to the file above.
 
+To automate the process of generating this file we've created new env variable (and gp env) TERRAFORM_CLOUD_TOKEN and script to set tfrc file:
+[bin/generate_tfrc_credentials)](bin/generate_tfrc_credentials)
