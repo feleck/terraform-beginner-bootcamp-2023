@@ -1,4 +1,100 @@
-# Terraform Beginner Bootcamp 2023
+# Terraform Beginner Bootcamp 2023 - Week 0
+
+- [Week 0 (Prep)](#week-0--prep-)
+  * [Create repo from repository](#create-repo-from-repository)
+  * [Jumppad - demo environments simplified](#jumppad---demo-environments-simplified)
+  * [Git & Gitpod](#git---gitpod)
+  * [Basic writing and formatting syntax](#basic-writing-and-formatting-syntax)
+- [Week 0 (Project Prep)](#week-0--project-prep-)
+  * [Branching Tagging PR (:mage:)](#branching-tagging-pr---mage--)
+    + [[Semantic Versioning](https://semver.org/spec/v2.0.0.html)](#-semantic-versioning--https---semverorg-spec-v200html-)
+    + [This project is going to utilize semantic versioning for its tagging](#this-project-is-going-to-utilize-semantic-versioning-for-its-tagging)
+  * [Terraform CLI Refactor (:mage:)](#terraform-cli-refactor---mage--)
+    + [Considerations for Linux Distribution](#considerations-for-linux-distribution)
+      - [[Linux Permissions](https://en.wikipedia.org/wiki/Chmod)](#-linux-permissions--https---enwikipediaorg-wiki-chmod-)
+      - [[Shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)) -](#-shebang--https---enwikipediaorg-wiki-shebang--unix----)
+      - [Execution](#execution)
+    + [Considerations with the Terraform CLI installation changes](#considerations-with-the-terraform-cli-installation-changes)
+    + [Refactoring into Bash Scripts](#refactoring-into-bash-scripts)
+    + [[Gitpod tasks](https://gitpod.io/docs/configure/workspaces/tasks)](#-gitpod-tasks--https---gitpodio-docs-configure-workspaces-tasks-)
+  * [Working with Env Vars](#working-with-env-vars)
+    + [Env Vars in Gitpod](#env-vars-in-gitpod)
+  * [AWS CLI installation](#aws-cli-installation)
+  * [[Terraform providers](https://registry.terraform.io/browse/providers)](#-terraform-providers--https---registryterraformio-browse-providers-)
+    + [AWS Provider documentation: [https://registry.terraform.io/providers/hashicorp/aws/latest/docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)](#aws-provider-documentation---https---registryterraformio-providers-hashicorp-aws-latest-docs--https---registryterraformio-providers-hashicorp-aws-latest-docs-)
+    + [Random provider [https://registry.terraform.io/providers/hashicorp/random/latest](https://registry.terraform.io/providers/hashicorp/random/latest)](#random-provider--https---registryterraformio-providers-hashicorp-random-latest--https---registryterraformio-providers-hashicorp-random-latest-)
+    + [Terraform Main Commands](#terraform-main-commands)
+  * [S3 Bucket](#s3-bucket)
+    + [AWS Provider Authentication and Configuration](#aws-provider-authentication-and-configuration)
+  * [Issues with Terraform Cloud and Gitpod Workspace](#issues-with-terraform-cloud-and-gitpod-workspace)
+
+## Week 0 (Prep)
+
+### Create repo from repository
+
+- Go to [github template repo](https://github.com/ExamProCo/terraform-beginner-bootcamp-2023)
+- Click *Use this template* and then *Create a new repository*.  
+- Make sure the repository name is exactly: **terraform-beginner-bootcamp-2023** and make sure -t's the only repository with that name (it's available).
+- Give it a description if you want.
+- Make sure it is **Public**
+
+    > Repository name and public access is needed for automatic validator!
+
+- Click *Create repository*
+
+```bash
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/key_for_github
+    git clone git@github.com:..../terraform-beginner-bootcamp-2023.git
+```
+
+### Jumppad - demo environments simplified
+
+[Jumppad](https://jumppad.dev) - Jumppad enables the creation and configuration of lightweight, reproducible, and portable environments as code.  
+
+To use Jumppad you need a recent version of Docker and the Git CLI installed on your system.
+
+- Docker
+- Git
+
+[Installation docs](https://jumppad.dev/docs/introduction/installation) -
+Quick install (Linux, Mac and Windows WSL2).  
+The quick install script allows you to easily install the latest version of Jumppad. Run the following command in your terminal, the install script will prompt you for administrator access if required.
+
+> `curl https://jumppad.dev/install | bash`
+
+Or using a package manager in Debian
+
+```bash
+    echo "deb [trusted=yes] https://apt.fury.io/jumppad/ /" | \
+    sudo tee -a /etc/apt/sources.list.d/fury.list
+
+    sudo apt-get update
+
+    sudo apt-get install jumppad
+```
+
+[Terraform Workshop](https://github.com/jumppad-labs/terraform-workshop) - clone the repo and ```jumppad up```.
+
+### Git & Gitpod
+
+[Gitpod](https://gitpod.io)
+
+- Create gitpod account.
+- Install gitpod plugin in your browser.
+- You'll see gitpod button on repository page on your github account.
+
+Click to Gitpod button, open new Workspace (repo name, editor - VS Code, and Standard machine).
+
+Workflow:
+
+- make a change
+- commit changes to github (with a message)
+- sync our changes (push)
+
+### Basic writing and formatting syntax
+
+[Basic writing and formatting syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
 
 ## Week 0 (Project Prep)
 
@@ -6,7 +102,7 @@
 
 > Repository name: [terraform-beginner-bootcamp-2023](https://github.com/feleck/terraform-beginner-bootcamp-2023)
 
-#### [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
+### [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 Generally - branch maned after the ticket (feature) - after creating an issue we got the number (#1)
 
@@ -63,7 +159,7 @@ Switch to new branch and open Gitpod env.
 
 Checking Linux distribution - `cat /etc/os-release`.  
 
-Local env: Debian, Gipod: Ubuntu.  
+Local env: Debian, Gitpod: Ubuntu.  
 
 For Gitpod:
 
@@ -237,12 +333,12 @@ In every TF project at the very beginning:
 terraform init
 ```
 
-Creates lock file (locked versioning for providers and modules) [.terraform.lock.hcl](./.terraform.lock.hcl). It **should be commited to repository**(VCS).
+Creates lock file (locked versioning for providers and modules) [.terraform.lock.hcl](./.terraform.lock.hcl). It **should be committed to repository**(VCS).
 
 > VCS - Version Control System
 
-It also creates `.terraform` folder, which contains binary for provider (written in go and distributed as binary).  It **should *not* be commited to repository** (VCS).
-Make sure `.terraform` folder is ignored in [.gitignore](./.gitignore) file - not commited to repository (and ignored many more files).  
+It also creates `.terraform` folder, which contains binary for provider (written in go and distributed as binary).  It **should *not* be committed to repository** (VCS).
+Make sure `.terraform` folder is ignored in [.gitignore](./.gitignore) file - not committed to repository (and ignored many more files).  
 
 We can make a ***plan***.  
 
@@ -263,7 +359,7 @@ After a change in main.tf - `terraform plan` again, verify what is going to be c
 Output can be checked wit `terraform output` or if wanted exact output(only value): `terraform output random_bucket_name`.
 
 `terraform apply` creates a [terraform.tfstate](./terraform.tfstate) file which contains information about a current state of infrastructure - no case to edit this file - and [terraform.tfstate.backup](./terraform.tfstate.backup) - backup file. `"serial": 2,` indicates the version. Can contain sensitive data! Lo  
-It **should *not* be commited to repository** (VCS).
+It **should *not* be committed to repository** (VCS).
 
 To destroy resources use:
 
@@ -280,7 +376,7 @@ Then - resource: aws_s3_bucket.
 
 #### AWS Provider Authentication and Configuration
 
-- Not recommended: directly inside a block. (would be comitted to VCS)
+- Not recommended: directly inside a block. (would be committed to VCS)
 - Using env variables
 
 ### Issues with Terraform Cloud and Gitpod Workspace
