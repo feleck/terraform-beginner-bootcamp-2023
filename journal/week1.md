@@ -17,3 +17,28 @@ PROJECT ROOT
 ```
 
 [Standard Module Structure](https://developer.hashicorp.com/terraform/language/modules/develop/structure)
+
+## Terraform Tagging
+
+S3_bucket tags:
+
+```json
+tags = {
+    Name    = "My bucket"
+    Environment = "Dev"
+}
+```
+
+## Terraform Cloud Variables
+
+Migrate from cloud back to local - to do that need to set env variables in terraform cloud (allow TF Cloud to access AWS).
+Then delete `.terraform.lock.hcl` file and `.terraform` folder just in case.
+To provide variable value inline use:  
+`tf plan -var user_uuid="asdasas-asdd-dasda-sdasd-asdsad"`  
+For normal use - put it in `terraform.tfvars` and the variables should be set in a TF cloud.  
+
+> In TF we can set two kind of variables:
+>
+> - Environment
+> - Terraform
+
