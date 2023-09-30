@@ -86,3 +86,35 @@ Terraform loads variables in the following order, with later sources taking prec
 - The `terraform.tfvars.json` file, if present.
 - Any `*.auto.tfvars` or `*.auto.tfvars.json` files, processed in lexical order of their filenames.
 - Any `-var` and `-var-file` options on the command line, in the order they are provided. (This includes variables set by a Terraform Cloud workspace.)
+
+## Dealing With Configuration Drift
+
+## What happens if we lose our state file?
+
+If you lose your state file `terraform.tfstate`, you most likely have to tear down all your cloud infrastructure manually.  
+You can use terraform port but it won't for all cloud resources. You need check the terraform providers documentation for which resources support import.
+
+### Fix Missing Resources with Terraform Import
+
+[Importing Infrastructure](https://developer.hashicorp.com/terraform/cli/import)  
+[AWS S3 Bucket Import](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#import)  
+Import can be done through `import.tf` file or using command.  
+Use the import block to import existing infrastructure resources into Terraform, bringing them under Terraform's management. Unlike the terraform import command, configuration-driven import using import blocks is predictable, works with CICD pipelines, and lets you preview an import operation before modifying state.
+
+```bash
+tf import aws_s3_bucket.example 25df7jmmiicxccchl7l67dkhi90v3l9y
+```
+
+After importing and trying to `tf plan` again random provider offers a new name and to destroy old (imported) bucket and create new one.
+
+```bash
+tf import aws_s3_bucket.example 25df7jmmiicxccchl7l67dkhi90v3l9y
+```
+
+And still: `aws_s3_bucket.example must be replaced`.
+
+### Fix Manual Configuration
+
+If someone goes and delete or modifies cloud resource manually through ClickOps.
+
+If we run Terraform plan is with attempt to put our infrastructure back into the expected state fixing Configuration Drift
