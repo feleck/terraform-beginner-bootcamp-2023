@@ -1,7 +1,16 @@
-resource "aws_s3_bucket" "website_bucket" {
-  bucket = var.bucket_name
+terraform {
 
-  tags = {
-      UserUuid = var.user_uuid
-  }
+#   cloud {
+#     organization = "TerraCamp"
+
+#     workspaces {
+#       name = "terra-house-1"
+#     }
+#   }
+}
+
+module "terrahouse_aws" {
+  source = "./modules/terrahouse-aws"
+  user_uuid = var.user_uuid
+  bucket_name = var.bucket_name
 }
