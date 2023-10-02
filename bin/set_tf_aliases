@@ -1,0 +1,5 @@
+#!/bin/env bash
+
+source ./bin/set_tf_alias
+source ./bin/set_tf_apply_alias
+source ./bin/set_tf_destroy_alias
