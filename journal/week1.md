@@ -27,7 +27,7 @@ Then delete `.terraform.lock.hcl` file and `.terraform` folder just in case.
 
 S3_bucket tags:
 
-```json
+```tf
 tags = {
     Name    = "My bucket"
     Environment = "Dev"
@@ -198,4 +198,46 @@ resource "aws_s3_object" "index_html" {
   key    = "index.html"
   source = "${path.root}/public/index.html"
 }
+```
+
+## Terraform Local Values (locals)
+
+[Local Values](https://developer.hashicorp.com/terraform/language/values/locals)  
+Inline - in file definition of used values. Can be useful when data needs to be transformed into another format.  
+A local value assigns a name to an expression, so you can use the name multiple times within a module instead of repeating the expression..
+
+```tf
+locals{
+  s3_origin_id = "MyS3Origin"
+}
+```
+
+## Terraform Data Sources
+
+Allows to use to source data from cloud resources.  
+This is useful to reference cloud resources without importing them.  
+[Data Sources](https://developer.hashicorp.com/terraform/language/data-sources)
+
+```tf
+data "aws_caller_identity" "current" {}
+
+output "account_id" {
+  value = data.aws_caller_identity.current.account_id
+}
+```
+
+## Content Deliver Network
+
+### Origin Access Control
+
+[AWS OAC](https://aws.amazon.com/blogs/networking-and-content-delivery/amazon-cloudfront-introduces-origin-access-control-oac/)
+
+### Bucket Policy - working with JSON
+
+[jsonencode function](https://developer.hashicorp.com/terraform/language/functions/jsonencode) - encodes a given value to a string using JSON syntax. Here is used to create the JSON policy inline it the HCL.  
+**Hashicorp Configuration Language** - HCL is a toolkit for creating structured configuration languages that are both human- and machine-friendly, for use with command-line tools. Although intended to be generally useful, it is primarily targeted towards devops tools, servers, etc.
+
+```tf
+> jsonencode({"hello"="world"})
+{"hello":"world"}
 ```
