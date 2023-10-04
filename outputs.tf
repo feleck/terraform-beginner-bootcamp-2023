@@ -9,8 +9,9 @@ output "s3_website_endpoint" {
 }
 
 locals {
-  root_path = root.path
+  root_path = path.root
 }
+
 output "root_path" {
   value = local.root_path
 }
