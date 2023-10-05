@@ -197,7 +197,6 @@ class TerraTownsMockServer < Sinatra::Base
     # Validate payload data
     name = payload["name"]
     description = payload["description"]
-    domain_name = payload["domain_name"]
     content_version = payload["content_version"]
 
     unless params[:uuid] == $home[:uuid]
@@ -208,12 +207,17 @@ class TerraTownsMockServer < Sinatra::Base
     home.town = $home[:town]
     home.name = name
     home.description = description
-    home.domain_name = domain_name
+    home.domain_name = $home[:domain_name]
     home.content_version = content_version
 
     unless home.valid?
       error 422, home.errors.messages.to_json
     end
+    
+    # save updated data to mock DB
+    $home[:name] = home.name
+    $home[:description] = home.description
+    $home[:content_version] = home.content_version
 
     return { uuid: params[:uuid] }.to_json
   end
@@ -230,8 +234,9 @@ class TerraTownsMockServer < Sinatra::Base
     end
 
     # delete from mock DB
+    uuid = $home[:uuid]
     $home = {}
-    { message: "House deleted successfully" }.to_json
+    { uuid: uuid }.to_json
   end
 end
 
