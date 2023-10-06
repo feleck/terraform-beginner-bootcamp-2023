@@ -67,3 +67,8 @@ All of  the code for our server is stored in the `server.rb` file.
 >       description ...  
 >     }  
 
+## CRUD
+
+Terraform Provider resource utilize CRUD (**C**reate **R**ead **U**pdate **D**elete)
+
+[https://en.wikipedia.org/wiki/Create,_read,_update_and_delete](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete)
