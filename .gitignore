@@ -33,5 +33,7 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+terraform-provider-terratowns/terraform-provider-terratowns_v*
+
 # Ignore VSCode settings
 **/.vscode/*
