@@ -67,7 +67,7 @@ func Provider() *schema.Provider {
 
 func validateUUID(v interface{}, k string) (ws []string, errors []error) {
 	log.Print("validateUUID:start")
-	
+
 	value := v.(string)
 
 	if _, err := uuid.Parse(value); err != nil {
@@ -237,6 +237,7 @@ func resourceHouseRead(ctx context.Context, d *schema.ResourceData, m interface{
 }
 
 func resourceHouseUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+
 	log.Print("ResourceHouseUpdate:start")
 	var diags diag.Diagnostics
 	config := m.(*Config)
