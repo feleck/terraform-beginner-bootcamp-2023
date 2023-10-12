@@ -45,7 +45,7 @@ Now there are numerous games that classify in the noir genre.
 DESCRIPTION
   # domain_name =  "3eqdda2.cloudfront.net" 
   domain_name = module.home_games_hosting.domain_name
-  town = "missingo"
+  town = "gamers-grotto"
   content_version = var.games.content_version
 }
 
@@ -69,6 +69,6 @@ intricate plots, and an underlying existentialist philosophy
 DESCRIPTION
   # domain_name =  "3eqdda2.cloudfront.net" 
   domain_name = module.home_movies_hosting.domain_name
-  town = "missingo"
+  town = "video-valley"
   content_version = var.movies.content_version
 }
