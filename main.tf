@@ -25,9 +25,6 @@ module "home_games_hosting" {
   source = "./modules/terrahome_aws"
   user_uuid = var.teacherseat_user_uuid
   public_path = var.games.public_path
-  # index_html_filepath = var.index_html_filepath
-  # error_html_filepath = var.error_html_filepath
-  # assets_path = var.assets_path
   content_version = var.games.content_version
 }
 
@@ -43,9 +40,8 @@ which is why crime and detective work have often featured as part of the noir pr
 However, the genre has since spread to a variety of mediums, including video games. 
 Now there are numerous games that classify in the noir genre.
 DESCRIPTION
-  # domain_name =  "3eqdda2.cloudfront.net" 
   domain_name = module.home_games_hosting.domain_name
-  town = "missingo"
+  town = "gamers-grotto"
   content_version = var.games.content_version
 }
 
@@ -53,9 +49,6 @@ module "home_movies_hosting" {
   source = "./modules/terrahome_aws"
   user_uuid = var.teacherseat_user_uuid
   public_path = var.movies.public_path
-  # index_html_filepath = var.index_html_filepath
-  # error_html_filepath = var.error_html_filepath
-  # assets_path = var.assets_path
   content_version = var.movies.content_version
 }
 
@@ -67,8 +60,7 @@ characterized by such elements as cynical heroes,
 stark lighting effects, frequent use of flashbacks, 
 intricate plots, and an underlying existentialist philosophy
 DESCRIPTION
-  # domain_name =  "3eqdda2.cloudfront.net" 
   domain_name = module.home_movies_hosting.domain_name
-  town = "missingo"
+  town = "video-valley"
   content_version = var.movies.content_version
 }
